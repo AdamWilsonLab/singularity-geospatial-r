@@ -1,5 +1,5 @@
 Bootstrap: shub
-From: AdamWilsonLab/singularity:geospatial_rocker
+From: AdamWilsonLab/singularity-rocker_geospatial:latest
 Stage: build
 
 %setup
