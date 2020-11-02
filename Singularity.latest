@@ -1,5 +1,5 @@
 Bootstrap: shub
-From: AdamWilsonLab/singularity-rocker_geospatial:latest
+From: AdamWilsonLab/singularity-rocker-geospatial:latest
 Stage: build
 
 %setup
@@ -11,7 +11,7 @@ Stage: build
 #    /file1 /opt
 
 %environment
-    export LISTEN_PORT=12345
+    export LISTEN_PORT=8787
     export LC_ALL=C
 
 %post
