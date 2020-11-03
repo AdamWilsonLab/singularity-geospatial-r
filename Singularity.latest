@@ -2,13 +2,13 @@ Bootstrap: shub
 From: AdamWilsonLab/singularity-rocker-geospatial
 Stage: build
 
-%setup
-#    touch /file1
-#    touch ${SINGULARITY_ROOTFS}/file2
+setup
+    touch /file1
+    touch ${SINGULARITY_ROOTFS}/file2
 
 %files
-#    /file1
-#    /file1 /opt
+    /file1
+    /file1 /opt
 
 %environment
     export LISTEN_PORT=8787
@@ -17,19 +17,19 @@ Stage: build
 %post
 
 # Install some ubuntu packages
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+#apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 apt-get install -y --no-install-recommends --allow-unauthenticated \
   libcurl4-openssl-dev \
   libssl-dev \
   libxml2-dev \
   libcairo2-dev \
-  libxt-dev \
-  jags \
-  ca-certificates \
-  wget \
-  gdebi-core
+  libxt-dev #\
+#  jags \
+#  ca-certificates \
+#  wget \
+#  gdebi-core
 
-  # Add support for LDAP authentication
+# Add support for LDAP authentication
 #  wget \
 #    --no-verbose \
 #    -O get-pip.py \
