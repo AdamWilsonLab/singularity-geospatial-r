@@ -1,51 +1,56 @@
-Bootstrap: shub
-From: AdamWilsonLab/singularity-rocker-geospatial
-Stage: build
+BootStrap: docker
+From: ubuntu:16.04
 
-setup
-    touch /file1
-    touch ${SINGULARITY_ROOTFS}/file2
+%labels
+  Maintainer Adam Wilson
+  R_Version 3.6.2
 
-%files
-    /file1
-    /file1 /opt
+%apprun R
+  exec R "${@}"
 
-%environment
-    export LISTEN_PORT=8787
-    export LC_ALL=C
+%apprun Rscript
+  exec Rscript "${@}"
+
+%runscript
+  exec R "${@}"
 
 %post
+  # Software versions
+  export R_VERSION=3.6.2
 
-# Install some ubuntu packages
-#apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
-apt-get install -y --no-install-recommends --allow-unauthenticated \
-  libcurl4-openssl-dev \
-  libssl-dev \
-  libxml2-dev \
-  libcairo2-dev \
-  libxt-dev #\
-#  jags \
-#  ca-certificates \
-#  wget \
-#  gdebi-core
+  # Get dependencies
+  apt-get update
+  apt-get install -y --no-install-recommends \
+    locales
 
-# Add support for LDAP authentication
-#  wget \
-#    --no-verbose \
-#    -O get-pip.py \
-#    "https://bootstrap.pypa.io/get-pip.py"
-#  python3 get-pip.py
-#  rm -f get-pip.py
-#  pip3 install ldap3
+  # Configure default locale
+  echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+  locale-gen en_US.utf8
+  /usr/sbin/update-locale LANG=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+  export LANG=en_US.UTF-8
 
+  # Install R
+  echo "deb http://cran.r-project.org/bin/linux/ubuntu xenial-cran35/" > /etc/apt/sources.list.d/r.list
+  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+  apt-get update
+  apt-get install -y --no-install-recommends \
+    r-base=${R_VERSION}* \
+    r-base-core=${R_VERSION}* \
+    r-base-dev=${R_VERSION}* \
+    r-recommended=${R_VERSION}* \
+    r-base-html=${R_VERSION}* \
+    r-doc-html=${R_VERSION}* \
+    r-cran-littler \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    libxml2-dev \
+    libcairo2-dev \
+    libxt-dev \
+    libcgal-dev \
+    libglu1-mesa-dev \
+    libglu1-mesa-dev
 
-  # Clean up
-  rm -rf /var/lib/apt/lists/*
-
-NOW=`date`
-echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
-
-# Some R-related things
   # Add a default CRAN mirror
   echo "options(repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.method = 'libcurl')" >> /usr/lib/R/etc/Rprofile.site
 
@@ -53,33 +58,5 @@ echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
   mkdir -p /library
   echo "R_LIBS_SITE=/library:\${R_LIBS_SITE}" >> /usr/lib/R/etc/Renviron.site
 
-
-  install2.r --error \
-    Morpho \
-    rgl \
-    maxnet \
-    ENMeval \
-    Rvcg \
-    scales \
-    viridis \
-    rjags \
-    coda \
-    mcmc
-
-
-%runscript
-    echo "Container was created $NOW"
-    echo "Arguments received: $*"
-    exec echo "$@"
-
-%startscript
-    nc -lp $LISTEN_PORT
-
-
-%labels
-    Author adam@wilsonlab.io
-    Version v0.0.1
-
-%help
-    This is a container used to illustrate a def file that uses all
-    supported sections.
+  # Clean up
+  rm -rf /var/lib/apt/lists/*
