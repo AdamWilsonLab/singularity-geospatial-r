@@ -10,8 +10,15 @@ From: rocker/geospatial
   %environment
       export LISTEN_PORT=8787
       export LC_ALL=C
+      export PATH=/usr/lib/rstudio-server/bin:${PATH}
+
 
   %post
+
+  # make some needed directories
+  mkdir -p /var/run/rstudio-server/rstudio-rsession
+  chmod -R  a+rwxt /var/run/rstudio-server
+
 
   # Get dependencies
   apt-get update -y
@@ -50,6 +57,6 @@ R -e "install.packages('mcmc', method='wget')"
 
 %startscript
   export R_PORT=${R_PORT:-"8787"}
-  export R_ADDRESS=${R_ADDRESS:-"0.0.0.0"}
+  export R_ADDRESS=${R_ADDRESS:-"127.0.0.1"}
 
-  rserver --www-port $R_PORT --www-address $R_ADDRESS --auth-none 0 
+  rserver --www-port $R_PORT --www-address $R_ADDRESS --auth-none 0 --auth-pam-helper-path=pam-helper
