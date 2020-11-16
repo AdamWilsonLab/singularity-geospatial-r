@@ -4,9 +4,10 @@ From: rocker/geospatial
 %labels
   Author Adam M. Wilson
   Version 0.0.1
+  Adapted_From https://pawseysc.github.io/singularity-containers/23-web-rstudio/index.html
 
 %startscript
   export R_PORT=${R_PORT:-"8787"}
   export R_ADDRESS=${R_ADDRESS:-"0.0.0.0"}
 
-  rserver --www-port $R_PORT --www-address $R_ADDRESS --auth-none=0 --auth-pam-helper-path=pam-helper
+  rserver --www-port $R_PORT --www-address $R_ADDRESS
