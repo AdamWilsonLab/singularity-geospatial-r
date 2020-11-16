@@ -63,4 +63,4 @@ R -e "install.packages('mcmc', method='wget')"
   export R_PORT=${R_PORT:-"8787"}
   export R_ADDRESS=${R_ADDRESS:-"127.0.0.1"}
   nc -lp $R_PORT
-  rserver --www-port $R_PORT --www-address $R_ADDRESS --auth-none 0 --auth-pam-helper-path=pam-helper
+  rserver --www-port $R_PORT --www-address $R_ADDRESS --auth-none 0 --auth-pam-helper-path=/usr/lib/rstudio_auth
