@@ -4,27 +4,31 @@ From: rocker/geospatial
 %labels
   Author Adam M. Wilson
   Version 0.0.1
-  Adapted_From https://pawseysc.github.io/singularity-containers/23-web-rstudio/index.html
+  #Adapted_From https://pawseysc.github.io/singularity-containers/23-web-rstudio/index.html
 
 
-  %environment
+%environment
       export LISTEN_PORT=8787
       export LC_ALL=C
       export PATH=/usr/lib/rstudio-server/bin:${PATH}
 
-
-  %post
+%post
 
   # make some needed directories
   mkdir -p /var/run/rstudio-server/rstudio-rsession
   chmod -R  a+rwxt /var/run/rstudio-server
+
+  # add authentication script
+  wget -O /usr/lib/rstudio_auth https://raw.githubusercontent.com/AdamWilsonLab/singularity-geospatial-r/main/rstudio_auth.sh
+  # Ensure execute permissions
+  chmod a+rx /usr/lib/rstudio_auth
 
 
   # Get dependencies
   apt-get update -y
   apt-get upgrade -y  --allow-unauthenticated
   apt-get install -y --no-install-recommends --allow-unauthenticated \
-        locales
+        locales \
         libssl-dev \
         libxml2-dev \
         libcairo2-dev \
@@ -58,5 +62,5 @@ R -e "install.packages('mcmc', method='wget')"
 %startscript
   export R_PORT=${R_PORT:-"8787"}
   export R_ADDRESS=${R_ADDRESS:-"127.0.0.1"}
-
+  nc -lp $R_PORT
   rserver --www-port $R_PORT --www-address $R_ADDRESS --auth-none 0 --auth-pam-helper-path=pam-helper
