@@ -1,6 +1,6 @@
 BootStrap: docker
 From: rocker/geospatial
-
+ 
 %labels
   Maintainer Adam Wilson
 
