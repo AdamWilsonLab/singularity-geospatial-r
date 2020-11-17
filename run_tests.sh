@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export SINGULARITY_IMAGE="${SINGULARITY_IMAGE:-singularity-rstudio.simg}"
+export SINGULARITY_IMAGE="${SINGULARITY_IMAGE:-singularity-geospatial-r.simg}"
 echo "Using Singularity image: ${SINGULARITY_IMAGE}"
 
 check_password () {
