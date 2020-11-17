@@ -18,6 +18,7 @@ install:
   - sudo apt-get install -y singularity-container
 before_script:
   - sudo singularity build $SINGULARITY_IMAGE $SPEC
+  - sudo chmod a+x ./run_tests.sh
 script: ./run_tests.sh
 notifications:
   email:
