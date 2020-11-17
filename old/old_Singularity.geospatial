@@ -52,10 +52,5 @@ From: rocker/geospatial
 
 %setup
 
-#wget https://raw.githubusercontent.com/nickjer/singularity-rstudio/master/rstudio_auth.sh /home/ubuntu/rstudio_auth.sh
-#install -Dv \
-#   /home/ubuntu/rstudio_auth.sh \
-#   ${SINGULARITY_ROOTFS}/usr/lib/rstudio-server/bin/rstudio_auth
-
 # Clean up
 rm -rf /var/lib/apt/lists/*
