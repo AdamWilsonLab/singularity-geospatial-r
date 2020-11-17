@@ -1,0 +1,54 @@
+Bootstrap: shub
+From: nickjer/singularity-rstudio
+
+%post
+
+# Install some ubuntu packages
+#apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+apt-get update -y
+apt-get upgrade -y  --allow-unauthenticated
+apt-get install -y --no-install-recommends --allow-unauthenticated \
+  libcurl4-openssl-dev \
+  libssl-dev \
+  libxml2-dev \
+  libcairo2-dev \
+  libxt-dev \
+  ca-certificates \
+  littler \
+  r-cran-littler \
+  libcgal-dev \
+  libglu1-mesa-dev \
+
+
+#  echo "install2 is at"
+#  which install2
+
+
+R -e "install.packages('maxnet', method='wget')"
+R -e "install.packages('Morpho', method='wget')"
+R -e "install.packages('rgl', method='wget')"
+R -e "install.packages('ENMeval', method='wget')"
+R -e "install.packages('Rvcg', method='wget')"
+R -e "install.packages('scales', method='wget')"
+R -e "install.packages('viridis', method='wget')"
+R -e "install.packages('rjags', method='wget')"
+R -e "install.packages('coda', method='wget')"
+R -e "install.packages('mcmc', method='wget')"
+
+
+%runscript
+    echo "Container was created $NOW"
+    echo "Arguments received: $*"
+    exec echo "$@"
+
+%startscript
+    nc -lp $LISTEN_PORT
+
+
+%labels
+    Author adam@wilsonlab.io
+    Version v0.0.1
+
+%help
+    This is a container used to illustrate a def file that uses all
+    supported sections.

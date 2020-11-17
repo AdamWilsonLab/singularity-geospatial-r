@@ -1,0 +1,61 @@
+BootStrap: docker
+From: rocker/geospatial
+
+%labels
+  Maintainer Adam Wilson
+
+%help
+    This will run RStudio Server with the rocker/geospatial docker image
+
+%apprun rserver
+    exec rserver "${@}"
+
+%runscript
+    exec rserver "${@}"
+
+%environment
+    export PATH=/usr/lib/rstudio-server/bin:${PATH}
+
+%post
+  # Software versions
+  export R_VERSION=3.6.2
+
+  # make some needed directories
+  mkdir -p /var/run/rstudio-server/rstudio-rsession
+  chmod -R  a+rwxt /var/run/rstudio-server
+
+  # Get dependencies
+  apt-get update -y
+  apt-get upgrade -y  --allow-unauthenticated
+  apt-get install -y --no-install-recommends --allow-unauthenticated \
+        locales
+
+  # Configure default locale
+  echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+  locale-gen en_US.utf8
+  /usr/sbin/update-locale LANG=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+  export LANG=en_US.UTF-8
+
+  # Add a default CRAN mirror
+  mkdir -p /usr/lib/R/etc/
+  echo "options(repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.method = 'libcurl')" >> /usr/lib/R/etc/Rprofile.site
+
+  # Add a directory for host R libraries
+  mkdir -p /library
+  echo "R_LIBS_SITE=/library:\${R_LIBS_SITE}" >> /usr/lib/R/etc/Renviron.site
+
+%environment
+    export PATH=/usr/lib/rstudio-server/bin:${PATH}
+    export LISTEN_PORT=8787
+    export LC_ALL=C
+
+%setup
+
+#wget https://raw.githubusercontent.com/nickjer/singularity-rstudio/master/rstudio_auth.sh /home/ubuntu/rstudio_auth.sh
+#install -Dv \
+#   /home/ubuntu/rstudio_auth.sh \
+#   ${SINGULARITY_ROOTFS}/usr/lib/rstudio-server/bin/rstudio_auth
+
+# Clean up
+rm -rf /var/lib/apt/lists/*
