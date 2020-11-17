@@ -5,7 +5,7 @@ echo "Using Singularity image: ${SINGULARITY_IMAGE}"
 
 check_password () {
   echo "${2}" | \
-    singularity exec rstudio_auth "${1}"
+    singularity exec /usr/lib/rstudio_auth "${1}"
 }
 
 set -e
