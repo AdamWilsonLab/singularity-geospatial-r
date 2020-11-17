@@ -3,7 +3,7 @@
 # from https://github.com/nickjer/singularity-rstudio/blob/master/rstudio_auth.sh
 
 # Confirm username is supplied
-if [[ $# -ne 1 ]]; then
+if [[ $# -lt 1 ]]; then
   echo "Usage: auth USERNAME"
   exit 1
 fi
