@@ -3,6 +3,7 @@
 # from https://github.com/nickjer/singularity-rstudio/blob/master/rstudio_auth.sh
 
 # Confirm username is supplied
+# edited because https://github.com/grst/rstudio-server-conda/issues/3
 if [[ $# -lt 1 ]]; then
   echo "Usage: auth USERNAME"
   exit 1
