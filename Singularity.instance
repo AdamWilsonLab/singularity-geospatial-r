@@ -1,6 +1,6 @@
 Bootstrap: docker
 From: rocker/geospatial
-
+ 
 %labels
   Author Adam M. Wilson
   Version 0.0.1
