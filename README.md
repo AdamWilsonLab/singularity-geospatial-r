@@ -6,9 +6,9 @@
 # Geospatial R
 This container builds upon the [rocker geospatial container](https://hub.docker.com/r/rocker/geospatial), which I ported to [Singularity here](https://singularity-hub.org/collections/4908).  This repository/collection then adds additional packages.
 
+# Development Notes
 
-
-
+I started with [nickjer's very helpful example](https://github.com/nickjer/singularity-rstudio/blob/master/.travis.yml) and updated it to pull from the geospatial version of the versioned rocker stack instead of the repository based R.  This should make it easier to keep up to date.  I also pulled from the
 
 # Useful Links
 
