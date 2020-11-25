@@ -8,15 +8,15 @@ From: rocker/geospatial
 
 
 %environment
-      export LISTEN_PORT=8787
-      export LC_ALL=C
-      export PATH=/usr/lib/rstudio-server/bin:${PATH}
+#      export LISTEN_PORT=8788
+#      export LC_ALL=C
+#      export PATH=/usr/lib/rstudio-server/bin:${PATH}
 
 %post
 
-  # make some needed directories
-  mkdir -p /var/run/rstudio-server/rstudio-rsession
-  chmod -R  a+rwxt /var/run/rstudio-server
+# make some needed directories
+#  mkdir -p /var/run/rstudio-server/rstudio-rsession
+#  chmod -R  a+rwxt /var/run/rstudio-server
 
   # add authentication script
   wget -O /usr/lib/rstudio_auth https://raw.githubusercontent.com/AdamWilsonLab/singularity-geospatial-r/main/rstudio_auth.sh
@@ -24,7 +24,7 @@ From: rocker/geospatial
   chmod a+rx /usr/lib/rstudio_auth
 
 
-  # Get dependencies
+  # Add some linux libraries (needed for R packages or otherwise)
   apt-get update -y
   apt-get upgrade -y  --allow-unauthenticated
   apt-get install -y --no-install-recommends --allow-unauthenticated \
@@ -48,18 +48,18 @@ echo "R_LIBS_SITE=/library:\${R_LIBS_SITE}" >> /usr/lib/R/etc/Renviron.site
 
 
 R -e "install.packages('maxnet', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('Morpho', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('rgl', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('ENMeval', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('scales', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('viridis', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('rjags', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('coda', method='wget', quiet=T, verbose=F)"
+#R -e "install.packages('Morpho', method='wget', quiet=T, verbose=F)"
+#R -e "install.packages('rgl', method='wget', quiet=T, verbose=F)"
+#R -e "install.packages('ENMeval', method='wget', quiet=T, verbose=F)"
+#R -e "install.packages('scales', method='wget', quiet=T, verbose=F)"
+#R -e "install.packages('viridis', method='wget', quiet=T, verbose=F)"
+#R -e "install.packages('rjags', method='wget', quiet=T, verbose=F)"
+#R -e "install.packages('coda', method='wget', quiet=T, verbose=F)"
 R -e "install.packages('mcmc', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('colourvalues', method='wget', quiet=T, verbose=F)"
 
-
-%startscript
-  export R_PORT=${R_PORT:-"8787"}
-  export R_ADDRESS=${R_ADDRESS:-"127.0.0.1"}
-  nc -lp $R_PORT
-  rserver --www-port $R_PORT --www-address $R_ADDRESS --auth-none 0 --auth-pam-helper-path=/usr/lib/rstudio_auth
+# %startscript
+#  export R_PORT=${R_PORT:-"8787"}
+#  export R_ADDRESS=${R_ADDRESS:-"127.0.0.1"}
+#  nc -lp $R_PORT
+#  rserver --www-port $R_PORT --www-address $R_ADDRESS --auth-none 0 --auth-pam-helper-path=/usr/lib/rstudio_auth

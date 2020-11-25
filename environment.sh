@@ -9,9 +9,9 @@ export SINGULARITY_LOCALCACHEDIR
 export SINGULARITY_CACHEDIR
 export SINGULARITY_TMPDIR
 
-export SINGULARITY_BINDPATH="$SINGULARITY_TMPDIR:/var/run,/active,/archive"
-export PATH="/usr/local/bin:/usr/lib/rstudio-server/bin:$PATH"
-export SINGULARITYENV_PATH="$PATH"
+#export SINGULARITY_BINDPATH="$SINGULARITY_TMPDIR:/var/run,/active,/archive"
+#export PATH="/usr/local/bin:/usr/lib/rstudio-server/bin:$PATH"
+#export SINGULARITYENV_PATH="$PATH"
 #export MODULEPATH="/depot/Modules/modulefiles"
 
 
