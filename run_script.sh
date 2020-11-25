@@ -19,9 +19,7 @@ singularity exec \
     rserver --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
 
 
-
-singularity instance start -C -B $(pwd):/home/rstudio -B $(pwd):$HOME   singularity-geospatial-r_latest.sif     rserver
-
+# use an instance
 singularity instance start --bind /projects/academic/adamw/ \
 -B mytmp:/tmp --bind myrun:/run \
 singularity-geospatial-r_latest.sif \
