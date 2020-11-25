@@ -7,7 +7,7 @@ env:
   global:
     - SINGULARITY_IMAGE=singularity-geospatial-r.simg
   matrix:
-    - SPEC=Singularity
+    - SPEC=Singularity.latest
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y squashfs-tools curl
