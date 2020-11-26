@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: rocker/geospatial 
+From: rocker/geospatial
 
 %labels
   Author Adam M. Wilson
@@ -28,8 +28,7 @@ mkdir -p /library
 echo "R_LIBS_SITE=/library:\${R_LIBS_SITE}" >> /usr/lib/R/etc/Renviron.site
 
 
-install2.r --error \
-  maxnet
+install2.r maxnet
 
 #R -e "install.packages('maxnet', method='wget', quiet=T, verbose=F)"
 #R -e "install.packages('Morpho', method='wget', quiet=T, verbose=F)"
