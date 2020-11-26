@@ -3,28 +3,15 @@
 export SINGULARITY_IMAGE="${SINGULARITY_IMAGE:-singularity-geospatial-r.simg}"
 echo "Using Singularity image: ${SINGULARITY_IMAGE}"
 
-check_password () {
-  echo "${2}" | \
-    singularity exec /usr/lib/rstudio_auth "${1}"
-}
 
-set -e
-set -x
+readonly PORT=$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
+export PASSWORD=$(openssl rand -base64 15)
+
+echo password=$PASSWORD
+echo port=$PORT
+
 
 # Verify RStudio Server installation
-singularity exec rserver --verify-installation=1 --www-address=0.0.0.0 --www-port=9898
+singularity exec rserver --verify-installation=1 --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
 
-# Verify default PAM auth helper script
-export RSTUDIO_PASSWORD="password"
-if ! check_password "${USER}" "${RSTUDIO_PASSWORD}"; then
-  exit 1
-fi
-if check_password "bad_user" "${RSTUDIO_PASSWORD}"; then
-  exit 1
-fi
-if check_password "${USER}" "bad_password"; then
-  exit 1
-fi
-
-{ set +x; } 2>/dev/null
-echo "All tests passed!"
+echo "All tests passed, go have a cappuchino."
