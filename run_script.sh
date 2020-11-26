@@ -2,8 +2,6 @@
 cd /panasas/scratch/grp-adamw/;
 singularity pull -F shub://AdamWilsonLab/singularity-geospatial-r
 
-# Error "Could not acquire revocation list file lock" resolved with help from
-# https://www.gitmemory.com/issue/rocker-org/rocker-versioned/213/726807289
 
 mkdir mytmp myrun
 
