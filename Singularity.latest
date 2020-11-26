@@ -4,13 +4,6 @@ From: rocker/geospatial
 %labels
   Author Adam M. Wilson
   Version 0.0.1
-  #Adapted_From https://pawseysc.github.io/singularity-containers/23-web-rstudio/index.html
-
-#  # add authentication script
-#  wget -O /usr/lib/rstudio_auth https://raw.githubusercontent.com/AdamWilsonLab/singularity-geospatial-r/main/rstudio_auth.sh
-#  # Ensure execute permissions
-#  chmod a+rx /usr/lib/rstudio_auth
-
 
   # Add some linux libraries (needed for R packages or otherwise)
   apt-get update -y
@@ -35,7 +28,10 @@ mkdir -p /library
 echo "R_LIBS_SITE=/library:\${R_LIBS_SITE}" >> /usr/lib/R/etc/Renviron.site
 
 
-R -e "install.packages('maxnet', method='wget', quiet=T, verbose=F)"
+install2.r --error \
+  maxnet
+
+#R -e "install.packages('maxnet', method='wget', quiet=T, verbose=F)"
 #R -e "install.packages('Morpho', method='wget', quiet=T, verbose=F)"
 #R -e "install.packages('rgl', method='wget', quiet=T, verbose=F)"
 #R -e "install.packages('ENMeval', method='wget', quiet=T, verbose=F)"
@@ -43,5 +39,5 @@ R -e "install.packages('maxnet', method='wget', quiet=T, verbose=F)"
 #R -e "install.packages('viridis', method='wget', quiet=T, verbose=F)"
 #R -e "install.packages('rjags', method='wget', quiet=T, verbose=F)"
 #R -e "install.packages('coda', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('mcmc', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('colourvalues', method='wget', quiet=T, verbose=F)"
+#R -e "install.packages('mcmc', method='wget', quiet=T, verbose=F)"
+#R -e "install.packages('colourvalues', method='wget', quiet=T, verbose=F)"
