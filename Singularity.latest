@@ -28,15 +28,15 @@ mkdir -p /library
 echo "R_LIBS_SITE=/library:\${R_LIBS_SITE}" >> /usr/lib/R/etc/Renviron.site
 
 
-install2.r maxnet
+#install2.r maxnet
 
-#R -e "install.packages('maxnet', method='wget', quiet=T, verbose=F)"
-#R -e "install.packages('Morpho', method='wget', quiet=T, verbose=F)"
-#R -e "install.packages('rgl', method='wget', quiet=T, verbose=F)"
-#R -e "install.packages('ENMeval', method='wget', quiet=T, verbose=F)"
-#R -e "install.packages('scales', method='wget', quiet=T, verbose=F)"
-#R -e "install.packages('viridis', method='wget', quiet=T, verbose=F)"
-#R -e "install.packages('rjags', method='wget', quiet=T, verbose=F)"
-#R -e "install.packages('coda', method='wget', quiet=T, verbose=F)"
-#R -e "install.packages('mcmc', method='wget', quiet=T, verbose=F)"
-#R -e "install.packages('colourvalues', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('maxnet', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('Morpho', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('rgl', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('ENMeval', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('scales', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('viridis', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('rjags', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('coda', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('mcmc', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('colourvalues', method='wget', quiet=T, verbose=F)"
