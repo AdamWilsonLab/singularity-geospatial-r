@@ -16,19 +16,18 @@ newgrp grp-adamw
 
 #  New method following https://www.rocker-project.org/use/singularity/
 readonly PORT=$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
+export PORT
 export PASSWORD=$(openssl rand -base64 15)
 
-singularity exec --bind /projects/academic/adamw/ \
--B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
-/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif \
-rserver  --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper &
-
-# use an instance
-#singularity instance start --bind /projects/academic/adamw/ \
+#singularity exec --bind /projects/academic/adamw/ \
 #-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
 #/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif \
-#rserver  --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
+#rserver  --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper &
 
+# use an instance
+singularity instance start --bind /projects/academic/adamw/ \
+-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
+/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif myserver
 
 
 cat 1>&2 <<END
@@ -46,26 +45,8 @@ cat 1>&2 <<END
     When done using RStudio Server, terminate the job by:
 
     1. Exit the RStudio Session ("power" button in the top right corner of the RStudio window)
+
+    2. Issue the following command on the login node:
+
+          singularity instance stop rserver
 END
-
-#    2. Issue the following command on the login node:
-#
-#          singularity instance stop rserver
-
-
-#singularity exec instance://rserver rserver
-
-
-#singularity exec --bind /projects/academic/adamw/ \
-#-B $SINGULARITY_LOCALCACHEDIR/mytmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/myrun:/run \
-#instance://rserver rserver --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
-
-#singularity exec instance://rserver rserver
-
-
-# Check status: port/password
-# singularity exec instance://rserver bash -c 'echo ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@horae.ccr.buffalo.edu'
-# singularity exec instance://rserver bash -c 'echo ssh -N -L 8787:hor:${PORT} ${USER}@hor'
-
-# singularity exec instance://rserver rserver --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
-# singularity exec instance://rserver rserver
