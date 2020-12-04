@@ -42,12 +42,15 @@ R -e "install.packages('rjags', method='wget', quiet=T, verbose=F)"
 R -e "install.packages('coda', method='wget', quiet=T, verbose=F)"
 R -e "install.packages('mcmc', method='wget', quiet=T, verbose=F)"
 R -e "install.packages('colourvalues', method='wget', quiet=T, verbose=F)"
+R -e "install.packages('BiocManager', method='wget', quiet=T, verbose=F)"
+R -e "BiocManager::install("rhdf5")"
 
 
 %startscript
 
-exec echo "RUNNING rserver startscript"
+echo "RUNNING rserver startscript"
 export PORT=$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
 export PASSWORD=$(openssl rand -base64 15)
+echo user=$USER password=$PASSWORD port=$PORT
 
-rserver  --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper &
+rserver  --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper

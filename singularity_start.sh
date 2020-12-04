@@ -15,9 +15,9 @@ mkdir -p $SINGULARITY_LOCALCACHEDIR/run
 newgrp grp-adamw
 
 #  New method following https://www.rocker-project.org/use/singularity/
-readonly PORT=$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
-export PORT
-export PASSWORD=$(openssl rand -base64 15)
+#readonly PORT=$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
+#export PORT
+#export PASSWORD=$(openssl rand -base64 15)
 
 #singularity exec --bind /projects/academic/adamw/ \
 #-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \

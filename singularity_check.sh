@@ -9,17 +9,15 @@ export SINGULARITY_CACHEDIR
 export SINGULARITY_TMPDIR
 
 
-PASSWORD=${singularity exec instance://myserver bash -c 'echo $PASSWORD'}
-PORT2=$(singularity exec instance://myserver bash -c 'echo $PORT')
-SSH_COMMAND=${singularity exec instance://myserver bash -c 'echo ssh -N -L 8787:${HOSTNAME}:${PORT2} ${USER}@horae.ccr.buffalo.edu'}
+PASSWORD=${singularity exec instance://rserver bash -c 'echo $PASSWORD'}
+PORT=${singularity exec instance://rserver bash -c 'echo $PORT'}
+SSH_COMMAND=${singularity exec instance://rserver bash -c 'echo ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@horae.ccr.buffalo.edu'}
 
-singularity exec --bind /projects/academic/adamw/ \
--B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
-instance://myserver rserver \
---www-port $PORT2 \
---auth-none=0 --auth-pam-helper-path=pam-helper
-
-#singularity exec instance://rserver rserver
+#nohup singularity exec --bind /projects/academic/adamw/ \
+#-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
+#instance://myserver rserver \
+#--www-port $PORT \
+#--auth-none=0 --auth-pam-helper-path=pam-helper &
 
 
 # Check status: port/password
@@ -45,11 +43,8 @@ cat 1>&2 <<END
     When done using RStudio Server, terminate the job by:
 
     1. Exit the RStudio Session ("power" button in the top right corner of the RStudio window)
+    2. Issue the following command on the login node:
+
+          singularity instance stop rserver
+
 END
-
-#    2. Issue the following command on the login node:
-#
-#          singularity instance stop rserver
-
-
-#singularity exec instance://rserver rserver
