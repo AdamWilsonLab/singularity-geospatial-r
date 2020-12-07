@@ -27,13 +27,13 @@ newgrp grp-adamw
 # use an instance
 singularity instance start --bind /projects/academic/adamw/ \
 -B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
-/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif myserver
+/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif rserver
 
 
 cat 1>&2 <<END
     1. SSH tunnel from your workstation using the following command:
 
-       ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@horae.ccr.buffalo.edu
+       ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@${HOSTNAME}
 
        and point your web browser to http://localhost:8787
 

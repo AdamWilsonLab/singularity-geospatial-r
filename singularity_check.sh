@@ -13,11 +13,11 @@ PASSWORD=${singularity exec instance://rserver bash -c 'echo $PASSWORD'}
 PORT=${singularity exec instance://rserver bash -c 'echo $PORT'}
 SSH_COMMAND=${singularity exec instance://rserver bash -c 'echo ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@horae.ccr.buffalo.edu'}
 
-#nohup singularity exec --bind /projects/academic/adamw/ \
-#-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
-#instance://myserver rserver \
-#--www-port $PORT \
-#--auth-none=0 --auth-pam-helper-path=pam-helper &
+singularity exec --bind /projects/academic/adamw/ \
+-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
+instance://rserver rserver \
+--www-port $PORT \
+--auth-none=0 --auth-pam-helper-path=pam-helper &
 
 
 # Check status: port/password
