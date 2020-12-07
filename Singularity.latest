@@ -18,7 +18,8 @@ From: rocker/geospatial
         libxt-dev \
         libcgal-dev \
         libglu1-mesa-dev \
-        ca-certificates
+        ca-certificates \
+        python
 
 
 # Add a default CRAN mirror
@@ -49,8 +50,7 @@ R -e "BiocManager::install('rhdf5')"
 %startscript
 
 echo "RUNNING rserver startscript"
-export PORT=$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
+export PORT=$(python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
 export PASSWORD=$(openssl rand -base64 15)
 echo user=$USER password=$PASSWORD port=$PORT
-
 rserver  --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
