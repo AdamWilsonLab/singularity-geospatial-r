@@ -18,8 +18,7 @@ From: rocker/geospatial
         libxt-dev \
         libcgal-dev \
         libglu1-mesa-dev \
-        ca-certificates \
-        python
+        ca-certificates
 
 
 # Add a default CRAN mirror
@@ -30,8 +29,6 @@ echo "options(repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.metho
 mkdir -p /library
 echo "R_LIBS_SITE=/library:\${R_LIBS_SITE}" >> /usr/lib/R/etc/Renviron.site
 
-
-#install2.r maxnet
 
 R -e "install.packages('maxnet', method='wget', quiet=T, verbose=F)"
 R -e "install.packages('Morpho', method='wget', quiet=T, verbose=F)"
@@ -49,8 +46,8 @@ R -e "BiocManager::install('rhdf5')"
 
 %startscript
 
-echo "RUNNING rserver startscript"
-export PORT=$(python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
-export PASSWORD=$(openssl rand -base64 15)
-echo user=$USER password=$PASSWORD port=$PORT
-rserver  --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
+#echo "RUNNING rserver startscript"
+#export PORT=$(python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
+#export PASSWORD=$(openssl rand -base64 15)
+#echo user=$USER password=$PASSWORD port=$PORT
+#rserver  --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper

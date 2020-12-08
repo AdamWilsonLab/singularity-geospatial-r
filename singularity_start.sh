@@ -15,9 +15,8 @@ mkdir -p $SINGULARITY_LOCALCACHEDIR/run
 newgrp grp-adamw
 
 #  New method following https://www.rocker-project.org/use/singularity/
-#readonly PORT=$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
-#export PORT
-#export PASSWORD=$(openssl rand -base64 15)
+export PORT=$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
+export PASSWORD=$(openssl rand -base64 15)
 
 #singularity exec --bind /projects/academic/adamw/ \
 #-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
@@ -27,7 +26,8 @@ newgrp grp-adamw
 # use an instance
 singularity instance start --bind /projects/academic/adamw/ \
 -B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
-/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif rserver
+/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif rserver \
+--www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper &
 
 
 cat 1>&2 <<END
