@@ -21,7 +21,7 @@ instance://rserver rserver \
 
 
 # Check status: port/password
-# singularity exec instance://rserver bash -c 'echo ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@horae.ccr.buffalo.edu'
+  # singularity exec instance://rserver bash -c 'echo ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@horae.ccr.buffalo.edu'
 # singularity exec instance://rserver bash -c 'echo ssh -N -L 8787:hor:${PORT} ${USER}@hor'
 
 # singularity exec instance://rserver rserver --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper

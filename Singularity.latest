@@ -5,6 +5,13 @@ From: rocker/geospatial
   Author Adam M. Wilson
   Version 0.0.1
 
+%apprun rserver
+    exec rserver "${@}"
+
+%runscript
+    exec rserver "${@}"
+
+
 %post
 
   # Add some linux libraries (needed for R packages or otherwise)
