@@ -17,7 +17,7 @@ singularity exec --bind /projects/academic/adamw/ \
 -B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
 instance://rserver rserver \
 --www-port $PORT \
---auth-none=0 --auth-pam-helper-path=pam-helper &
+--auth-none=0 --auth-pam-helper-path=pam-helper 
 
 
 # Check status: port/password

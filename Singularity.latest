@@ -11,7 +11,6 @@ From: rocker/geospatial
 %runscript
     exec rserver "${@}"
 
-
 %post
 
   # Add some linux libraries (needed for R packages or otherwise)
@@ -25,36 +24,38 @@ From: rocker/geospatial
         libxt-dev \
         libcgal-dev \
         libglu1-mesa-dev \
-        ca-certificates
+        ca-certificates \
+        netcat
 
+        NOW=`date`
+        echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 
-# Add a default CRAN mirror
-mkdir -p /usr/lib/R/etc/
-echo "options(repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.method = 'libcurl')" >> /usr/lib/R/etc/Rprofile.site
+  # Add a default CRAN mirror
+  mkdir -p /usr/lib/R/etc/
+  echo "options(repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.method = 'libcurl')" >> /usr/lib/R/etc/Rprofile.site
 
-# Add a directory for host R libraries
-mkdir -p /library
-echo "R_LIBS_SITE=/library:\${R_LIBS_SITE}" >> /usr/lib/R/etc/Renviron.site
+  # Add a directory for host R libraries
+  mkdir -p /library
+  echo "R_LIBS_SITE=/library:\${R_LIBS_SITE}" >> /usr/lib/R/etc/Renviron.site
 
-
-R -e "install.packages('maxnet', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('Morpho', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('rgl', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('ENMeval', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('scales', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('viridis', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('rjags', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('coda', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('mcmc', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('colourvalues', method='wget', quiet=T, verbose=F)"
-R -e "install.packages('BiocManager', method='wget', quiet=T, verbose=F)"
-R -e "BiocManager::install('rhdf5')"
+  # install some extra R packages
+  R -e "install.packages('maxnet', method='wget', quiet=T, verbose=F)"
+  R -e "install.packages('Morpho', method='wget', quiet=T, verbose=F)"
+  R -e "install.packages('rgl', method='wget', quiet=T, verbose=F)"
+  R -e "install.packages('ENMeval', method='wget', quiet=T, verbose=F)"
+  R -e "install.packages('scales', method='wget', quiet=T, verbose=F)"
+  R -e "install.packages('viridis', method='wget', quiet=T, verbose=F)"
+  R -e "install.packages('rjags', method='wget', quiet=T, verbose=F)"
+  R -e "install.packages('coda', method='wget', quiet=T, verbose=F)"
+  R -e "install.packages('mcmc', method='wget', quiet=T, verbose=F)"
+  R -e "install.packages('colourvalues', method='wget', quiet=T, verbose=F)"
+  R -e "install.packages('BiocManager', method='wget', quiet=T, verbose=F)"
+  R -e "BiocManager::install('rhdf5')"
 
 
 %startscript
-
-#echo "RUNNING rserver startscript"
-#export PORT=$(python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
-#export PASSWORD=$(openssl rand -base64 15)
-#echo user=$USER password=$PASSWORD port=$PORT
-#rserver  "$@"
+  echo "Container was created $NOW"
+  echo "RUNNING rserver startscript"
+  echo "Arguments received: $*"
+  echo user = $USER      password = $PASSWORD     port = $PORT
+  rserver  "$@"
