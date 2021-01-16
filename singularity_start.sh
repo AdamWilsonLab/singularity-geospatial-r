@@ -24,18 +24,20 @@ export PASSWORD=$(openssl rand -base64 15)
 #rserver  --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper &
 
 # use an instance
+#singularity instance start --bind /projects/academic/adamw/ \
+#-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
+#/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif rserver \
+#--www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
+
 singularity instance start --bind /projects/academic/adamw/ \
 -B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
-/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif rserver \
+/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif rserver rserver \
 --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
 
 
-cat 1>&2 <<END
+
+echo "
     1. SSH tunnel from your workstation using the following command:
-
-       ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@${HOSTNAME}
-
-       OR
 
        ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@horae.ccr.buffalo.edu
 
@@ -49,8 +51,9 @@ cat 1>&2 <<END
     When done using RStudio Server, terminate the job by:
 
     1. Exit the RStudio Session ("power" button in the top right corner of the RStudio window)
-
     2. Issue the following command on the login node:
 
           singularity instance stop rserver
-END
+
+" > ~/singularity_status.txt
+cat ~/singularity_status.txt
