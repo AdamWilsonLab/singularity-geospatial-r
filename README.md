@@ -10,6 +10,10 @@ This container builds upon the [rocker geospatial container](https://hub.docker.
 
 I started with [nickjer's very helpful example](https://github.com/nickjer/singularity-rstudio/blob/master/.travis.yml) and updated it to pull from the geospatial version of the versioned rocker stack instead of the repository based R.  This should make it easier to keep up to date.
 
+## rocker updates
+
+`docker run -d -p 8787:8787 -e PASSWORD=really_clever_password -v /Users/adamw/Documents:/Users/adamw/Documents rocker/rstudio`
+
 # Errors
 
 * Error "Could not acquire revocation list file lock" resolved with help from [here](https://www.gitmemory.com/issue/rocker-org/rocker-versioned/213/726807289)

@@ -11,6 +11,13 @@ From: rocker/geospatial
 %runscript
     exec rserver "${@}"
 
+%startscript
+    echo "Container was created $NOW"
+    echo "RUNNING rserver startscript"
+    echo "Arguments received: $*"
+    echo user = $USER      password = $PASSWORD     port = $PORT
+    rserver  "$@"
+
 %post
 
   # Add some linux libraries (needed for R packages or otherwise)
@@ -51,11 +58,3 @@ From: rocker/geospatial
   R -e "install.packages('colourvalues', method='wget', quiet=T, verbose=F)"
   R -e "install.packages('BiocManager', method='wget', quiet=T, verbose=F)"
   R -e "BiocManager::install('rhdf5')"
-
-
-%startscript
-  echo "Container was created $NOW"
-  echo "RUNNING rserver startscript"
-  echo "Arguments received: $*"
-  echo user = $USER      password = $PASSWORD     port = $PORT
-  rserver  "$@"
