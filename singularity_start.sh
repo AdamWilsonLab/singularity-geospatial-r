@@ -30,9 +30,8 @@ export PASSWORD=$(openssl rand -base64 15)
 #--www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
 
 singularity instance start --bind /projects/academic/adamw/ \
--B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
-/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif rinstance rserver --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
-
+-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp  --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
+/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif rserver --www-port ${PORT} --auth-none=0
 
 
 echo "
