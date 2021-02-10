@@ -23,21 +23,15 @@ export PASSWORD=$(openssl rand -base64 15)
 #/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif \
 #rserver  --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper &
 
-# use an instance
-#singularity instance start --bind /projects/academic/adamw/ \
-#-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
-#/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif rserver \
-#--www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
-
 singularity instance start --bind /projects/academic/adamw/ \
 -B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp  --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
-/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif rserver --www-port ${PORT} --auth-none=0
+/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif rserver --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
 
 
 echo "
     1. SSH tunnel from your workstation using the following command:
 
-       ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@horae.ccr.buffalo.edu
+       ssh -N -L 8787:horae.ccr.buffalo.edu:${PORT} ${USER}@horae.ccr.buffalo.edu
 
        and point your web browser to http://localhost:8787
 
@@ -46,6 +40,11 @@ echo "
        user: ${USER}
        password: ${PASSWORD}
 
+    3. to repeat these instructions:
+
+      cat ~/singularity_status.txt
+
+
     When done using RStudio Server, terminate the job by:
 
     1. Exit the RStudio Session ("power" button in the top right corner of the RStudio window)
@@ -53,5 +52,7 @@ echo "
 
           singularity instance stop rserver
 
+
 " > ~/singularity_status.txt
+
 cat ~/singularity_status.txt
