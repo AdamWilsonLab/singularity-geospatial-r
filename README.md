@@ -4,20 +4,29 @@
 
 
 # Geospatial R
-This container builds upon the [rocker geospatial container](https://hub.docker.com/r/rocker/geospatial), which I ported to [Singularity here](https://singularity-hub.org/collections/4908).  This repository/collection then adds additional packages.
+This container builds upon the [rocker geospatial container](https://hub.docker.com/r/rocker/geospatial), which I ported to [Singularity here](https://singularity-hub.org/collections/4908).  This repository/collection then [adds additional packages in this file](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/Singularity.latest).  That's the file to modify if you want to add more linux packages, etc.
 
 # Development Notes
 
 I started with [nickjer's very helpful example](https://github.com/nickjer/singularity-rstudio/blob/master/.travis.yml) and updated it to pull from the geospatial version of the versioned rocker stack instead of the repository based R.  This should make it easier to keep up to date.
 
-## rocker updates
+# Starting the instance
 
-`docker run -d -p 8787:8787 -e PASSWORD=really_clever_password -v /Users/adamw/Documents:/Users/adamw/Documents rocker/rstudio`
+See the [singularity_start.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/singularity_start.sh) file for instructions on how to start up a singularity instance on a Buffalo CCR server.  This includes a few system specific settings.
 
-# Errors
+# Port Forwarding
 
-* Error "Could not acquire revocation list file lock" resolved with help from [here](https://www.gitmemory.com/issue/rocker-org/rocker-versioned/213/726807289)
 
+Add something like the following to your .ssh/config file to simplify connecting with port forwarding via ssh.
+
+```
+Host rserver
+HostName horae.ccr.buffalo.edu
+LocalForward 8787 horae.ccr.buffalo.edu:PORT_NUMBER
+User adamw
+ForwardX11 yes
+ForwardAgent yes
+```
 
 # PuTTY Instructions
 
@@ -25,6 +34,16 @@ I started with [nickjer's very helpful example](https://github.com/nickjer/singu
 2. On the "SSH/Tunnels" tab, enter the port number of the rsession  under “Source port” and type in "10.122.15.25:33720" (server IP address + the port number) as the destination address. Then, click "Add".
 3. Connect and login as usual in the terminal.
 4. Point the web browser to `http://localhost:PORT` (where PORT is the port number)" and log in with the user name and the previously generated password.
+
+# Errors
+
+* Error "Could not acquire revocation list file lock" resolved with help from [here](https://www.gitmemory.com/issue/rocker-org/rocker-versioned/213/726807289)
+
+
+## rocker updates
+
+`docker run -d -p 8787:8787 -e PASSWORD=really_clever_password -v /Users/adamw/Documents:/Users/adamw/Documents rocker/rstudio`
+
 
 
 # Useful Links
