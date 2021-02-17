@@ -21,8 +21,8 @@ Add something like the following to your .ssh/config file to simplify connecting
 
 ```
 Host rserver
-HostName horae.ccr.buffalo.edu
-LocalForward 8787 horae.ccr.buffalo.edu:PORT_NUMBER
+HostName HOST
+LocalForward 8787 HOST:PORT_NUMBER
 User adamw
 ForwardX11 yes
 ForwardAgent yes
@@ -31,7 +31,7 @@ ForwardAgent yes
 # PuTTY Instructions
 
 1. in PuTTY, enter the server address (host name) and "22" (port) on the "Session" tab.
-2. On the "SSH/Tunnels" tab, enter the port number of the rsession  under “Source port” and type in "10.122.15.25:33720" (server IP address + the port number) as the destination address. Then, click "Add".
+2. On the "SSH/Tunnels" tab, enter the port number of the rsession  under “Source port” and type in HOST:PORT (replace with the actual server IP address + the port number) as the destination address. Then, click "Add".
 3. Connect and login as usual in the terminal.
 4. Point the web browser to `http://localhost:PORT` (where PORT is the port number)" and log in with the user name and the previously generated password.
 
@@ -42,7 +42,7 @@ ForwardAgent yes
 
 ## rocker updates
 
-`docker run -d -p 8787:8787 -e PASSWORD=really_clever_password -v /Users/adamw/Documents:/Users/adamw/Documents rocker/rstudio`
+`docker run -d -p 8787:8787 -e PASSWORD=really_clever_password -v ~/Documents:~/Documents rocker/rstudio`
 
 
 
