@@ -40,6 +40,7 @@ export PORT=$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); prin
 # generate a random password
 export PASSWORD=$(openssl rand -base64 15)
 
+# use exec instead of instance
 #singularity exec --bind /projects/academic/adamw/ \
 #-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
 #/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif \
