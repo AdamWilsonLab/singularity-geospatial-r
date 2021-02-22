@@ -1,18 +1,18 @@
 #! /usr/bin/env bash
 
 # create symlink to singularity folder in project storage
-# mkdir /projects/academic/adamw/singularity/adamw/.singularity
-# ln -s /projects/academic/adamw/singularity/adamw/.singularity .singularity
+# mkdir /projects/academic/adamw/singularity/$USER/.singularity
+# ln -s /projects/academic/adamw/singularity/$USER/.singularity .singularity
 
 # Symlinks for RStudio
-# mkdir /projects/academic/adamw/rstudio/adamw
-# mv .local/share/rstudio /projects/academic/adamw/rstudio/adamw/
-# ln -s /projects/academic/adamw/rstudio/adamw/rstudio .local/share/rstudio
+# mkdir /projects/academic/adamw/rstudio/$USER
+# mv .local/share/rstudio /projects/academic/adamw/rstudio/$USER/
+# ln -s /projects/academic/adamw/rstudio/$USER/rstudio .local/share/rstudio
 
-PROJECT_FOLDER=/projects/academic/adamw/
-CONTAINER_PATH=/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif
-SERVER_URL=horae.ccr.buffalo.edu
-SINGULARITY_LOCALCACHEDIR=/panasas/scratch/grp-adamw/singularity/$USER
+PROJECT_FOLDER="/projects/academic/adamw/"
+CONTAINER_PATH="/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif"
+SERVER_URL="horae.ccr.buffalo.edu"
+SINGULARITY_LOCALCACHEDIR="/panasas/scratch/grp-adamw/singularity/"$USER
 
 # Run as particular group to use group storage
 newgrp grp-adamw
@@ -22,14 +22,13 @@ SINGULARITY_CACHEDIR=$SINGULARITY_LOCALCACHEDIR
 SINGULARITY_TMPDIR=$SINGULARITY_LOCALCACHEDIR
 
 export PROJECT_FOLDER
+export CONTAINER_PATH
 export SERVER_URL
 export SINGULARITY_LOCALCACHEDIR
 export SINGULARITY_CACHEDIR
 export SINGULARITY_TMPDIR
 
-
 # Create the folders if they don't already exist
-mkdir -p $SINGULARITY_LOCALCACHEDIR
 mkdir -p $SINGULARITY_LOCALCACHEDIR/tmp
 mkdir -p $SINGULARITY_LOCALCACHEDIR/run
 
@@ -48,8 +47,8 @@ export PASSWORD=$(openssl rand -base64 15)
 
 
 # Start the instance
-singularity instance start --bind $PROJECT_FOLDER \
--B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp  --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
+singularity instance start --bind $PROJECT_FOLDER:$PROJECT_FOLDER \
+--bind $SINGULARITY_LOCALCACHEDIR/tmp:/tmp  --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
 $CONTAINER_PATH rserver --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
 
 # write a file with the details (port and password)
