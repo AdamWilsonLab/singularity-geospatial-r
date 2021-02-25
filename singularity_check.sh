@@ -3,12 +3,13 @@
 
 PASSWORD=${singularity exec instance://rserver bash -c 'echo $PASSWORD'}
 PORT=${singularity exec instance://rserver bash -c 'echo $PORT'}
-SSH_COMMAND=${singularity exec instance://rserver bash -c 'echo ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@horae.ccr.buffalo.edu'}
+SERVER_URL=${singularity exec instance://rserver bash -c 'echo $SERVER_URL'}
+SSH_COMMAND=${singularity exec instance://rserver bash -c 'echo ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@${HOSTNAME}'}
 
 echo "
     1. SSH tunnel from your workstation using the following command:
 
-       ssh -N -L 8787:${HOSTNAME}:${PORT} ${USER}@horae.ccr.buffalo.edu
+       ssh -N -L 8787:${SERVER_URL}:${PORT} ${USER}@${SERVER_URL}
 
        and point your web browser to http://localhost:8787
 
@@ -25,3 +26,8 @@ echo "
           singularity instance stop rserver
 
 "
+
+
+# Check logs at
+# cat /user/adamw/.singularity/instances/logs/srv-v15-25.cbls.ccr.buffalo.edu/adamw/rserver.out
+# cat /user/adamw/.singularity/instances/logs/srv-v15-25.cbls.ccr.buffalo.edu/adamw/rserver.err

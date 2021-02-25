@@ -9,47 +9,60 @@
 # mv .local/share/rstudio /projects/academic/adamw/rstudio/$USER/
 # ln -s /projects/academic/adamw/rstudio/$USER/rstudio .local/share/rstudio
 
-PROJECT_FOLDER="/projects/academic/adamw/"
-CONTAINER_PATH="/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif"
-SERVER_URL="horae.ccr.buffalo.edu"
-SINGULARITY_LOCALCACHEDIR="/panasas/scratch/grp-adamw/singularity/"$USER
+# mount project folder inside container:
+export PROJECT_FOLDER="/projects/academic/adamw/"
+# path to singularity container file:
+export CONTAINER_PATH="/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif"
+# to use for ssh:
+export SERVER_URL="horae.ccr.buffalo.edu"
+# folder to hold temporary singularity files - unique for each user:
+export SINGULARITY_LOCALCACHEDIR="/panasas/scratch/grp-adamw/singularity/"$USER
 
 # Run as particular group to use group storage
 newgrp grp-adamw
 
-# Set up singularity paths
-SINGULARITY_CACHEDIR=$SINGULARITY_LOCALCACHEDIR
-SINGULARITY_TMPDIR=$SINGULARITY_LOCALCACHEDIR
 
-export PROJECT_FOLDER
-export CONTAINER_PATH
-export SERVER_URL
-export SINGULARITY_LOCALCACHEDIR
-export SINGULARITY_CACHEDIR
-export SINGULARITY_TMPDIR
+##################################################
+# shouldn't need to edit anything below this point
+
+# define a few more folders used by singularity
+export SINGULARITY_CACHEDIR=$SINGULARITY_LOCALCACHEDIR
+export SINGULARITY_TMPDIR=$SINGULARITY_LOCALCACHEDIR
 
 # Create the folders if they don't already exist
 mkdir -p $SINGULARITY_LOCALCACHEDIR/tmp
 mkdir -p $SINGULARITY_LOCALCACHEDIR/run
 
 
-#  New method following https://www.rocker-project.org/use/singularity/
+# Following https://www.rocker-project.org/use/singularity/
 # Find an open port
 export PORT=$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
 # generate a random password
 export PASSWORD=$(openssl rand -base64 15)
 
-# use exec instead of instance
-#singularity exec --bind /projects/academic/adamw/ \
-#-B $SINGULARITY_LOCALCACHEDIR/tmp:/tmp --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
-#/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif \
-#rserver  --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper &
+# export SINGULARITYENV_USER=$USER
+# export SINGULARITYENV_PASSWORD=$PASSWORD
+# export SINGULARITYENV_PORT=$PORT
 
+# report on current settings
+echo "
+For debugging:
+-----------------------------------------
+PROJECT_FOLDER is set to: $PROJECT_FOLDER
+CONTAINER_PATH is set to: $CONTAINER_PATH
+SERVER_URL is set to: $SERVER_URL
+SINGULARITY_LOCALCACHEDIR is set to: $SINGULARITY_LOCALCACHEDIR
+PORT is set to: $PORT
+-----------------------------------------
+"
 
-# Start the instance
-singularity instance start --bind $PROJECT_FOLDER:$PROJECT_FOLDER \
---bind $SINGULARITY_LOCALCACHEDIR/tmp:/tmp  --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
-$CONTAINER_PATH rserver --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
+# Start the instance using variables above
+singularity instance start \
+      --bind $PROJECT_FOLDER:$PROJECT_FOLDER \
+      --bind $SINGULARITY_LOCALCACHEDIR/tmp:/tmp \
+      --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
+      $CONTAINER_PATH rserver --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
+
 
 # write a file with the details (port and password)
 echo "

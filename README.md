@@ -7,10 +7,10 @@ This repository includes a definition file for a singularity container _and_ ins
 
 Basic Steps:
 
-1. SSH to the server and pull the container from the Singularity Hub (or other source).  This has already been done for horae.
-2. Run the [singularity_start.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/singularity_start.sh) script to start up a singularity instance. This includes a few system specific settings for the Buffalo CCR.  This should only need to be done once (as long as the instance keeps running).
-3. Connect to the instance via SSH with port Forwarding.  You will need to be on campus or connected via VPN.
-4. Open RStudio at localhost:8787 in your local browser.
+1. SSH to the server and pull the container from the Singularity Hub (or other source) following [setup.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/setup.sh).  This has already been done for horae.
+2. Run the [singularity_start.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/singularity_start.sh) script to start up a singularity instance. This includes a few system specific settings for the Buffalo CCR.  This should only need to be done once (as long as the instance keeps running, server is not restarted, etc.).
+3. Connect to the instance via SSH with port Forwarding.  You will need to be on campus or connected via VPN.  See notes below for *nix and windows.
+4. Open RStudio at localhost:8787 in your local browser and login with user/password from #2 above.
 
 After running steps 1 and 2, you should be able to do just 3-4 to begin working.
 
