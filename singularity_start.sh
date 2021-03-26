@@ -28,10 +28,12 @@ newgrp grp-adamw
 # define a few more folders used by singularity
 export SINGULARITY_CACHEDIR=$SINGULARITY_LOCALCACHEDIR
 export SINGULARITY_TMPDIR=$SINGULARITY_LOCALCACHEDIR
+export RSTUDIO_DB=$SINGULARITY_LOCALCACHEDIR/$USER"/rstudio-server/"
 
 # Create the folders if they don't already exist
 mkdir -p $SINGULARITY_LOCALCACHEDIR/tmp
 mkdir -p $SINGULARITY_LOCALCACHEDIR/run
+mkdir -p $RSTUDIO_DB
 
 
 # Following https://www.rocker-project.org/use/singularity/
@@ -52,6 +54,7 @@ PROJECT_FOLDER is set to: $PROJECT_FOLDER
 CONTAINER_PATH is set to: $CONTAINER_PATH
 SERVER_URL is set to: $SERVER_URL
 SINGULARITY_LOCALCACHEDIR is set to: $SINGULARITY_LOCALCACHEDIR
+RSTUDIO_DB is set to: $RSTUDIO_DB
 PORT is set to: $PORT
 -----------------------------------------
 "
@@ -61,8 +64,14 @@ singularity instance start \
       --bind $PROJECT_FOLDER:$PROJECT_FOLDER \
       --bind $SINGULARITY_LOCALCACHEDIR/tmp:/tmp \
       --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
+      --bind $RSTUDIO_DB:/var/lib/rstudio-server \
       $CONTAINER_PATH rserver --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
-
+#
+#singularity exec \
+#            --bind $PROJECT_FOLDER:$PROJECT_FOLDER \
+#            --bind $SINGULARITY_LOCALCACHEDIR/tmp:/tmp \
+#            --bind $SINGULARITY_LOCALCACHEDIR/run:/run \
+#            $CONTAINER_PATH rserver --www-port ${PORT} --auth-none=0 --auth-pam-helper-path=pam-helper
 
 # write a file with the details (port and password)
 echo "
