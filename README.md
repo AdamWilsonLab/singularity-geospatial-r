@@ -49,7 +49,23 @@ I started with [nickjer's very helpful example](https://github.com/nickjer/singu
 
 ## Errors
 
-* Error "Could not acquire revocation list file lock" resolved with help from [here](https://www.gitmemory.com/issue/rocker-org/rocker-versioned/213/726807289)
+### Could not acquire revocation list file lock
+
+The error "Could not acquire revocation list file lock" resolved with help from [here](https://www.gitmemory.com/issue/rocker-org/rocker-versioned/213/726807289)
+
+### database error 7
+Starting in early 2021, something changed that resulted in the following error when starting a new instance:
+
+```
+ERROR database error 7 (sqlite3_statement_backend::loadOne: attempt to write a readonly database) [description: Could not delete expired revoked cookies from the database, description: Could not read revoked cookies from the database]; OCCURRED AT virtual rstudio::core::Error rstudio::core::database::Connection::execute(rstudio::core::database::Query&, bool*) src/cpp/core/Database.cpp:480; LOGGED FROM: int main(int, char* const*) src/cpp/server/ServerMain.cpp:729
+```
+
+I solved this by binding an address outside the container to `/var/lib/rstudio-server` when starting the instance as follows:
+```
+--bind $RSTUDIO_DB:/var/lib/rstudio-server
+```
+where `$RSTUDIO_DB` is just a path outside the container
+
 
 ## Local rocker updates
 
