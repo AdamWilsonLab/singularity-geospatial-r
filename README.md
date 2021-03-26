@@ -64,7 +64,7 @@ I solved this by binding an address outside the container to `/var/lib/rstudio-s
 ```
 --bind $RSTUDIO_DB:/var/lib/rstudio-server
 ```
-where `$RSTUDIO_DB` is just a path outside the container
+where `$RSTUDIO_DB` is just a path outside the container.  I got this idea from [this post](https://community.rstudio.com/t/permissions-related-to-upgrade-to-rstudio-server-open-source-1-4/94256/3).
 
 
 ## Local rocker updates
