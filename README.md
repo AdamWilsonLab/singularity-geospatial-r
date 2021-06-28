@@ -8,17 +8,27 @@ This repository includes a definition file for a singularity container _and_ ins
 Basic Steps:
 
 1. SSH to the server
-2. Run the following lines to pull the container from the Singularity Hub (or other source):
+2. Run the following lines to create a new directory in the scratch drive and pull the desired container from the Singularity Hub (or other source):
 ```
 mkdir -p /panasas/scratch/grp-adamw/singularity/$USER
 cd /panasas/scratch/grp-adamw/singularity/$USER;
 singularity pull -F shub://AdamWilsonLab/singularity-geospatial-r
-```  
-3. Run the [singularity_start.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/singularity_start.sh) script to start up a singularity instance. This includes a few system specific settings for the Buffalo CCR.  This should only need to be done once (as long as the instance keeps running, server is not restarted, etc.).
-3. Connect to the instance via SSH with port Forwarding.  You will need to be on campus or connected via VPN.  See notes below for *nix and windows.
-4. Open RStudio at localhost:8787 in your local browser and login with user/password from #2 above.
+```
+3. Create symlinks to singularity folder in project storage to prevent disk space problems in the home directory.
+```
+mkdir /projects/academic/adamw/singularity/$USER/.singularity
+ln -s /projects/academic/adamw/singularity/$USER/.singularity .singularity
 
-After running steps 1 and 2, you should be able to do just 3-4 to begin working.
+# Symlinks for RStudio
+mkdir /projects/academic/adamw/rstudio/$USER
+mv .local/share/rstudio /projects/academic/adamw/rstudio/$USER/
+ln -s /projects/academic/adamw/rstudio/$USER/rstudio .local/share/rstudio
+```  
+4. Run the [singularity_start.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/singularity_start.sh) script to start up a singularity instance. You can just copy paste the code into the terminal.  This includes a few system specific settings for the Buffalo CCR.  This should only need to be done once (as long as the instance keeps running, server is not restarted, etc.).  If the instance stops for any reason, you'll need to rerun this script.  You can confirm it's running with `singularity instance list` or by checking `htop`.
+5. Connect to the instance via SSH with port Forwarding.  You will need to be on campus or connected via VPN.  See notes below for *nix and windows.
+6. Open RStudio at localhost:8787 in your local browser and login with user/password from #4 above.
+
+After running steps 1-4, you should be able to do just 5-6 to begin working.
 
 ## Singularity Container: Geospatial R
 This container builds upon the [rocker geospatial container](https://hub.docker.com/r/rocker/geospatial), which I ported to [Singularity here](https://singularity-hub.org/collections/4908).  This repository/collection then [adds additional packages in this file](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/Singularity.latest).  That's the file to modify if you want to add more linux packages, etc.
