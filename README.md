@@ -76,6 +76,13 @@ I started with [nickjer's very helpful example](https://github.com/nickjer/singu
 
 ## Errors
 
+### Unable to connect to service
+
+This error can appear in the web browser when connecting via localhost.  This can be caused by RStudio not being able to write session files in the right place.  Confirm that:
+
+1. The directory `/projects/academic/adamw/rstudio/$USER/rstudio` exists
+2. and is linked to `~/.local/share/rstudio`
+
 ### Could not acquire revocation list file lock
 
 The error "Could not acquire revocation list file lock" resolved with help from [here](https://www.gitmemory.com/issue/rocker-org/rocker-versioned/213/726807289)
