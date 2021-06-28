@@ -18,11 +18,11 @@ singularity pull -F shub://AdamWilsonLab/singularity-geospatial-r
 ```
 3. Create symlinks to singularity folder in project storage to prevent disk space problems in the home directory.
 ```
-mkdir /projects/academic/adamw/singularity/$USER/.singularity
+mkdir -p /projects/academic/adamw/singularity/$USER/.singularity
 ln -s /projects/academic/adamw/singularity/$USER/.singularity .singularity
 
 # Symlinks for RStudio
-mkdir /projects/academic/adamw/rstudio/$USER
+mkdir -p /projects/academic/adamw/rstudio/$USER
 mv .local/share/rstudio /projects/academic/adamw/rstudio/$USER/
 ln -s /projects/academic/adamw/rstudio/$USER/rstudio .local/share/rstudio
 ```  
