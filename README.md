@@ -7,8 +7,14 @@ This repository includes a definition file for a singularity container _and_ ins
 
 Basic Steps:
 
-1. SSH to the server and pull the container from the Singularity Hub (or other source) following [setup.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/setup.sh).  This has already been done for horae.
-2. Run the [singularity_start.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/singularity_start.sh) script to start up a singularity instance. This includes a few system specific settings for the Buffalo CCR.  This should only need to be done once (as long as the instance keeps running, server is not restarted, etc.).
+1. SSH to the server
+2. Run the following lines to pull the container from the Singularity Hub (or other source):
+```
+mkdir -p /panasas/scratch/grp-adamw/singularity/$USER
+cd /panasas/scratch/grp-adamw/singularity/$USER;
+singularity pull -F shub://AdamWilsonLab/singularity-geospatial-r
+```  
+3. Run the [singularity_start.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/singularity_start.sh) script to start up a singularity instance. This includes a few system specific settings for the Buffalo CCR.  This should only need to be done once (as long as the instance keeps running, server is not restarted, etc.).
 3. Connect to the instance via SSH with port Forwarding.  You will need to be on campus or connected via VPN.  See notes below for *nix and windows.
 4. Open RStudio at localhost:8787 in your local browser and login with user/password from #2 above.
 
@@ -19,7 +25,7 @@ This container builds upon the [rocker geospatial container](https://hub.docker.
 
 # Connecting via SSH
 
-## *NIX systems
+## *NIX systems (Mac and Linux)
 Use terminal to ssh to the server as explained in [singularity_start.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/singularity_start.sh).
 Add something like the following to your .ssh/config file to simplify connecting with port forwarding via ssh.
 
@@ -41,6 +47,10 @@ On Windows you will need to use PuTTY or a similar terminal program.
 3. Connect and login as usual in the terminal.
 4. Point the web browser to `http://localhost:PORT` (where PORT is the port number)" and log in with the user name and the previously generated password.
 
+# TODOs
+
+1. Separate container from startup and monitor script
+2. Switch to a docker image
 
 
 # Development Notes
