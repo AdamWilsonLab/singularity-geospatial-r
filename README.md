@@ -22,7 +22,7 @@ mkdir -p /projects/academic/adamw/singularity/$USER/.singularity
 ln -s /projects/academic/adamw/singularity/$USER/.singularity .singularity
 
 # Symlinks for RStudio
-mkdir -p /projects/academic/adamw/rstudio/$USER
+mkdir -p /projects/academic/adamw/rstudio/$USER/rstudio
 mv .local/share/rstudio /projects/academic/adamw/rstudio/$USER/
 
 mkdir -p ~/.local/share
