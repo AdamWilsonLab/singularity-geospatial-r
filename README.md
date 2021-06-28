@@ -24,7 +24,7 @@ ln -s /projects/academic/adamw/singularity/$USER/.singularity .singularity
 # Symlinks for RStudio
 mkdir -p /projects/academic/adamw/rstudio/$USER
 mv .local/share/rstudio /projects/academic/adamw/rstudio/$USER/
-ln -s /projects/academic/adamw/rstudio/$USER/rstudio .local/share/rstudio
+ln -s /projects/academic/adamw/rstudio/$USER/rstudio ~/.local/share/rstudio
 ```  
 4. Run the [singularity_start.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/singularity_start.sh) script to start up a singularity instance. You can just copy paste the code into the terminal.  This includes a few system specific settings for the Buffalo CCR.  This should only need to be done once (as long as the instance keeps running, server is not restarted, etc.).  If the instance stops for any reason, you'll need to rerun this script.  You can confirm it's running with `singularity instance list` or by checking `htop`.
 
