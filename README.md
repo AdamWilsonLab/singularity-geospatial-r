@@ -5,7 +5,9 @@
 # Overview
 This repository includes a definition file for a singularity container _and_ instructions for starting up an instance on CENTOS in a HPC environment.  
 
-## Basic Steps:
+# Getting Started
+
+## Setting up the Singularity Instance
 
 1. SSH to the server
 2. Run the following lines to create a new directory in the scratch drive and pull the desired container from the Singularity Hub (or other source):
@@ -25,10 +27,13 @@ mv .local/share/rstudio /projects/academic/adamw/rstudio/$USER/
 ln -s /projects/academic/adamw/rstudio/$USER/rstudio .local/share/rstudio
 ```  
 4. Run the [singularity_start.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/singularity_start.sh) script to start up a singularity instance. You can just copy paste the code into the terminal.  This includes a few system specific settings for the Buffalo CCR.  This should only need to be done once (as long as the instance keeps running, server is not restarted, etc.).  If the instance stops for any reason, you'll need to rerun this script.  You can confirm it's running with `singularity instance list` or by checking `htop`.
-5. Connect to the instance via SSH with port Forwarding.  You will need to be on campus or connected via VPN.  See notes below for *nix and windows.
-6. Open RStudio at localhost:8787 in your local browser and login with user/password from #4 above.
 
-After running steps 1-4, you should be able to do just 5-6 to begin working.
+## Connecting to RStudio
+
+After running the steps above, you should be able to do just the following to begin working.  If the server restarts you will need to re-run step 4 above.
+
+1. Connect to the instance via SSH with port Forwarding.  You will need to be on campus or connected via VPN.  See notes below for *nix and windows.
+2. Open RStudio at localhost:8787 in your local browser and login with user/password from #4 above.
 
 ## Singularity Container: Geospatial R
 This container builds upon the [rocker geospatial container](https://hub.docker.com/r/rocker/geospatial), which I ported to [Singularity here](https://singularity-hub.org/collections/4908).  This repository/collection then [adds additional packages in this file](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/Singularity.latest).  That's the file to modify if you want to add more linux packages, etc.

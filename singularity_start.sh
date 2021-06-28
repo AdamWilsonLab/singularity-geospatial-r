@@ -1,17 +1,9 @@
 #! /usr/bin/env bash
 
-# create symlink to singularity folder in project storage
-# mkdir /projects/academic/adamw/singularity/$USER/.singularity
-# ln -s /projects/academic/adamw/singularity/$USER/.singularity .singularity
-
-# Symlinks for RStudio
-# mkdir /projects/academic/adamw/rstudio/$USER
-# mv .local/share/rstudio /projects/academic/adamw/rstudio/$USER/
-# ln -s /projects/academic/adamw/rstudio/$USER/rstudio .local/share/rstudio
-
 # mount project folder inside container:
 export PROJECT_FOLDER="/projects/academic/adamw/"
-# path to singularity container file:
+# path to singularity container file.  If you want to use a different image, you'll need
+# to update this line.
 export CONTAINER_PATH="/panasas/scratch/grp-adamw/singularity/singularity-geospatial-r_latest.sif"
 # to use for ssh:
 export SERVER_URL="horae.ccr.buffalo.edu"
