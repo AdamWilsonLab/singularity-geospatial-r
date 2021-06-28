@@ -5,7 +5,7 @@
 # Overview
 This repository includes a definition file for a singularity container _and_ instructions for starting up an instance on CENTOS in a HPC environment.  
 
-Basic Steps:
+## Basic Steps:
 
 1. SSH to the server
 2. Run the following lines to create a new directory in the scratch drive and pull the desired container from the Singularity Hub (or other source):
