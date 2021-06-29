@@ -16,6 +16,11 @@ mkdir -p /panasas/scratch/grp-adamw/singularity/$USER
 cd /panasas/scratch/grp-adamw/singularity/$USER;
 singularity pull -F shub://AdamWilsonLab/singularity-geospatial-r
 ```
+Or if you are downloading from github, use something like this:
+```
+wget -O singularity-geospatial-r_latest.sif https://github.com/AdamWilsonLab/singularity-geospatial-r/releases/download/0.0.1/AdamWilsonLab-singularity-geospatial-r.latest.sif
+```
+
 3. Create symlinks to singularity folder in project storage to prevent disk space problems in the home directory.
 ```
 mkdir -p /projects/academic/adamw/singularity/$USER/.singularity
