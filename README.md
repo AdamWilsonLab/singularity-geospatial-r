@@ -18,6 +18,7 @@ singularity pull -F shub://AdamWilsonLab/singularity-geospatial-r
 ```
 Or if you are downloading from github, use something like this:
 ```
+cd /panasas/scratch/grp-adamw/singularity/$USER;
 wget -O singularity-geospatial-r_latest.sif https://github.com/AdamWilsonLab/singularity-geospatial-r/releases/download/0.0.1/AdamWilsonLab-singularity-geospatial-r.latest.sif
 ```
 
