@@ -32,7 +32,8 @@ From: rocker/geospatial
         libcgal-dev \
         libglu1-mesa-dev \
         ca-certificates \
-        netcat
+        netcat\
+        libsecret-1-0
 
         NOW=`date`
         echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
@@ -57,4 +58,5 @@ From: rocker/geospatial
   R -e "install.packages('mcmc', method='wget', quiet=T, verbose=F)"
   R -e "install.packages('colourvalues', method='wget', quiet=T, verbose=F)"
   R -e "install.packages('BiocManager', method='wget', quiet=T, verbose=F)"
+  R -e "install.packages('keyring', method='wget', quiet=T, verbose=F)"
   R -e "BiocManager::install('rhdf5')"
