@@ -1,5 +1,5 @@
 name: singularity-deploy
-
+# from https://github.com/singularityhub/singularity-deploy/blob/main/VERSION
 on:
   push:
     # This branch does not exist! You should update this to be your "production" branch

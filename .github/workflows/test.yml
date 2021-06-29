@@ -1,4 +1,5 @@
 name: singularity-deploy-test
+# from https://github.com/singularityhub/singularity-deploy/blob/main/VERSION
 
 # run on creation of a release tag
 on:
