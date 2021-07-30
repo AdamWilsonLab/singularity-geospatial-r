@@ -61,5 +61,4 @@ From: rocker/geospatial
   R -e "install.packages('BiocManager', method='wget', quiet=T, verbose=F)"
   R -e "install.packages('keyring', method='wget', quiet=T, verbose=F)"
   R -e "install.packages('ENMTools', method='wget', quiet=T, verbose=F)"
-  R -e "install.packages('rjags', method='wget', quiet=T, verbose=F)"
   R -e "BiocManager::install('rhdf5')"
