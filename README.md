@@ -10,20 +10,18 @@ This repository includes a definition file for a singularity container _and_ ins
 ## Setting up the Singularity Instance
 
 1. SSH to the server
-2. Run the following lines to create a new directory in the scratch drive and pull the desired container from the Singularity Hub (or other source):
+2. Run the following to select the target folder and download the current version of this container:
 ```
-mkdir -p /panasas/scratch/grp-adamw/singularity/$USER
+# cd to user singularity directory
 cd /panasas/scratch/grp-adamw/singularity/$USER;
-singularity pull -F shub://AdamWilsonLab/singularity-geospatial-r
-```
-Or if you are downloading from github, use something like this:
-```
-cd /panasas/scratch/grp-adamw/singularity/$USER;
-wget -O singularity-geospatial-r_latest.sif https://github.com/AdamWilsonLab/singularity-geospatial-r/releases/download/0.0.1/AdamWilsonLab-singularity-geospatial-r.latest.sif
+# download the most recent version of the container
+wget -O singularity-geospatial-r_latest.sif \
+   https://github.com/AdamWilsonLab/singularity-geospatial-r/releases/download/0.0.1/AdamWilsonLab-singularity-geospatial-r.latest.sif
 ```
 
-3. Create symlinks to singularity folder in project storage to prevent disk space problems in the home directory.
+3. Create symlinks to singularity folder in project storage to prevent disk space problems in the home directory. You should only have to do this once.
 ```
+cd ~
 mkdir -p /projects/academic/adamw/singularity/$USER/.singularity
 ln -s /projects/academic/adamw/singularity/$USER/.singularity .singularity
 
@@ -50,13 +48,13 @@ This container builds upon the [rocker geospatial container](https://hub.docker.
 
 ## *NIX systems (Mac and Linux)
 Use terminal to ssh to the server as explained in [singularity_start.sh](https://github.com/AdamWilsonLab/singularity-geospatial-r/blob/main/singularity_start.sh).
-Add something like the following to your .ssh/config file to simplify connecting with port forwarding via ssh.
+Add something like the following to your .ssh/config file to simplify connecting with port forwarding via ssh.  You will then have to update HOST to the host address and PORT_NUMBER to the updated port number.
 
 ```
 Host rserver
 HostName HOST
 LocalForward 8787 HOST:PORT_NUMBER
-User adamw
+User $USER
 ForwardX11 yes
 ForwardAgent yes
 ```
